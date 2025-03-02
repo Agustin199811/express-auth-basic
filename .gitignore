@@ -1,0 +1,46 @@
+# Node modules
+node_modules/
+
+# Directorio de salida de TypeScript
+dist/
+
+# Archivos de configuración sensibles
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Archivos de configuración de IDEs y editores
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Cache de TypeScript
+*.tsbuildinfo
+
+# Archivos temporales
+tmp/
+temp/
+
+# Dependencias instaladas globalmente (si usas NVM)
+.nvm/
+
+# Configuraciones locales de ESLint
+.eslintcache
+
+# Coverage de pruebas
+coverage/
+
+# Archivos de configuración de herramientas específicas (opcional)
+*.swp
