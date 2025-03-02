@@ -2,8 +2,11 @@ import { HttpException } from "../../common/utils/http.exception";
 import { RoleEnum } from "../roles/enum/roles.enum";
 import { RolesService } from "../roles/roles.service";
 import { UsersService } from "../users/users.service";
+import { LoginUserDto } from "./dto/auth.login.dto";
 import { RegisterUserDto } from "./dto/auth.register.dto";
 import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
 export class AuthService {
     constructor(
         private readonly userService: UsersService,
@@ -29,5 +32,24 @@ export class AuthService {
             createAt: new Date(),
             roles: [userRole]
         })
+    }
+
+    public async singIn(loginDto: LoginUserDto) {
+        const user = await this.userService.findUserOneByEmail(loginDto.email);
+        if (!user) {
+            throw new HttpException(401, 'Email is wrong');
+        }
+
+        const isValidPassword = await bcryptjs.compare(loginDto.password, user.password);
+        if (!isValidPassword) {
+            throw new HttpException(401, 'Password is wrong');
+        }
+
+        const payload = { name:user.name, email: user.email, roles: user.roles.map((role) => role.name) };
+        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '60s' });
+        return {
+            email: user.email,
+            token,
+        }
     }
 }
