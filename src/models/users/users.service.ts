@@ -57,13 +57,25 @@ export class UsersService {
         return await this.userRepository.save(user);
     }
 
-    public async softDeleteUser(id: string): Promise<void> {
+    public async softDeleteUser(id: string): Promise<User> {
         const user = await this.userRepository.findOneBy({ id });
         if (!user) {
-            throw new HttpException(400, "User not found");
+            throw new HttpException(400, 'User not found');
         }
         user.deleteAt = new Date();
-        await this.userRepository.softDelete(user);
+        return await this.userRepository.save(user);
     }
+
+
+    //Put
+    public async restoreUser(id: string): Promise<User> {
+        const user = await this.userRepository.findOneBy({ id });
+        if (!user) {
+            throw new HttpException(400, 'User not found');
+        }
+        user.deleteAt = null;
+        return await this.userRepository.save(user);
+    }
+
 
 }

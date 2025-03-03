@@ -42,6 +42,18 @@ export const softDeleteRole = async (req: Request, res: Response): Promise<Respo
     }
 }
 
+export const restoreRole = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const role = await rolesServices.restoreRole(req.params.id);
+        return res.status(200).json({ RestoreRole: role });
+    } catch (error) {
+        if (error instanceof HttpException) {
+            return res.status(error.status).json({ message: error.message });
+        }
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 export const updateRoles = async (req: Request, res: Response): Promise<Response> => {
     try {
         const roles = await rolesServices.updateRoles(req.params.id, req.body as Partial<CreateRoleDto>)

@@ -16,7 +16,7 @@ export class Role {
     updateAt!: Date;
 
     @DeleteDateColumn()
-    deleteAt!: Date;
+    deleteAt!: Date | null;
 
     @ManyToMany(() => User, (user) => user.roles)
     users!: User[];

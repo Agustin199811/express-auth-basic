@@ -46,7 +46,7 @@ export class AuthService {
         }
 
         const payload = { name:user.name, email: user.email, roles: user.roles.map((role) => role.name) };
-        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '60s' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '5m' });
         return {
             email: user.email,
             token,

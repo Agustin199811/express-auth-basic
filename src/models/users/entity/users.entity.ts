@@ -22,7 +22,7 @@ export class User {
     udpdateAt!: Date;
 
     @DeleteDateColumn()
-    deleteAt!: Date;
+    deleteAt!: Date | null;
 
     @ManyToMany(() => Role, (role) => role.users, { eager: true })
     @JoinTable()

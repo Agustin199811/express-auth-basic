@@ -55,4 +55,18 @@ export class RolesService {
         role.deleteAt = new Date();
         return await this.roleRepository.save(role);
     }
+
+    public async restoreRole(id: string): Promise<Role> {
+        const role = await this.roleRepository.findOne({
+            where: { id },
+            withDeleted: true,
+        });
+
+        if (!role) {
+            throw new HttpException(400, "User not found");
+        }
+        role.deleteAt = null; 
+        return await this.roleRepository.save(role);
+    }
+
 }
