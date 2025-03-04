@@ -7,7 +7,9 @@ import roleRouter from "./router/roles.routes";
 import { UserSeeder } from "./models/users/seed/user.seed";
 import authRouter from "./router/auth.routes";
 //import router from "./router/users.routes";
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 
 app.use(express.json());

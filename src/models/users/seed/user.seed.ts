@@ -42,8 +42,6 @@ export class UserSeeder {
             await this.userRepository.save(newUser);
             console.log(`User ${user.email} created successfull`)
         }
-
-
     }
 
 }

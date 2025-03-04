@@ -6,10 +6,12 @@ import { HttpException } from "../../common/utils/http.exception";
 import { RegisterUserDto } from "./dto/auth.register.dto";
 import { LoginUserDto } from "./dto/auth.login.dto";
 import { AuthRequest } from "./interface/auth.interface";
+import { MailService } from "../mail/mail.service";
 
 const usersService = new UsersService();
 const rolesService = new RolesService();
-const authService = new AuthService(usersService, rolesService);
+const mailService = new MailService();
+const authService = new AuthService(usersService, rolesService, mailService);
 
 export const register = async (req: Request, res: Response): Promise<Response> => {
     try {
