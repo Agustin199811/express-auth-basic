@@ -5,10 +5,12 @@ import { profile, register, singIn } from "../models/auth/auth.controller";
 import { LoginUserDto } from "../models/auth/dto/auth.login.dto";
 import { authenticateJWT } from "../models/auth/middleware/auth.middleware";
 import { authorizeRoles } from "../models/auth/middleware/roles.middeware";
+import passport from "passport";
 
 
 const authRouter = Router();
 authRouter.post("/auth/register", validateDTO(RegisterUserDto) as any, register as unknown as RequestHandler);
 authRouter.post("/auth/login", validateDTO(LoginUserDto) as any, singIn as unknown as RequestHandler);
-authRouter.get("/auth/profile", authenticateJWT, authorizeRoles('user', 'admin') as any , profile as unknown as RequestHandler);
+//authRouter.get("/auth/profile", authenticateJWT, authorizeRoles('user', 'admin') as any , profile as unknown as RequestHandler);
+authRouter.get("/auth/profile", passport.authenticate('jwt',{session: false}), authorizeRoles('user', 'admin') as any , profile as unknown as RequestHandler);
 export default authRouter;
